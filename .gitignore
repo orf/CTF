@@ -1,0 +1,8 @@
+*.class
+*.pyc
+*.pyo
+.project
+.pydevproject
+*.svnsrc/__init__.py
+src/manage.py
+src/settings.py

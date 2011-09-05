@@ -1,0 +1,12 @@
+{% extends "template.html" %}
+{% block body %}
+Login or <a href="/register">Register</a>
+
+<form action="/login" method="POST">
+	{% csrf_token %}
+	Username: <input type="text" name="user" ><br />
+	Password: <input type="password" name="password" ><br />
+	<input type="submit">
+</form>
+
+{% endblock %}

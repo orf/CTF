@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block title %}{{ user.username.capitalize }}{% endblock %}
+{% block body %}
+Additional Information:<br />
+Company: {{ user.additional_info.company }}<br />
+Title: {{ user.additional_info.title }}<br />
+<br />
+Answers {{ user.username }} has given:
+<table border=1>
+	<tr>
+		<td>Question</td>
+		<td>Time</td>
+	</tr>
+	{% for answer in user.answers.all %}
+	<tr bgcolor="{% if answer.answer = answer.question.answer %}lightgreen{% else %}red{% endif %}">
+		<td><a href="/q/{{ answer.question.id }}">{{ answer.question.title }}</a></td>
+		<td>{{ answer.question.started|timesince:answer.submitted }} after activation</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

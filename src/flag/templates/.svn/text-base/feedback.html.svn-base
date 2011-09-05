@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block body %}
+
+<br />
+<form method="POST" action="/feedback">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit Feedback">
+</form>
+
+{% endblock %}

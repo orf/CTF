@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>CTF</title>
+<!-- add your meta tags here -->
+
+<link href="/static/my_layout.css" rel="stylesheet" type="text/css" />
+<link href="/static/basemod.css" rel="stylesheet" type="text/css" />
+<script src="/static/sortable.js"></script>
+<script type="text/javascript" src="/static/jquery.js"></script>
+<style type="text/css">@import "/static/jquery.countdown.css"</style>
+<script type="text/javascript" src="/static/countdown.js"></script>
+<!--[if lte IE 7]>
+<link href="static/yaml/patches/patch_my_layout.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+{% block head %}{% endblock %}
+</head>
+<body>
+	
+  <div class="page_margins">
+    <!-- start: skip link navigation -->
+    <!-- end: skip link navigation -->
+    <div id="border-top">
+      <div id="edge-tl"></div>
+      <div id="edge-tr"></div>
+    </div>
+    <div class="page">
+      <div id="header">
+      	<h1>{% block title %}{% endblock %}</h1>
+        <div id="topnav">
+          <!-- start: skip link navigation -->
+          <a class="skip" title="skip link" href="#navigation">Skip to the navigation</a><span class="hideme">.</span>
+          <a class="skip" title="skip link" href="#content">Skip to the content</a><span class="hideme">.</span>
+          <!-- end: skip link navigation -->
+          {% if not request.user.is_authenticated %}<a href="/login">Login</a>{% else %}Welcome {{ request.user.username }} | <a href="/logout">Logout</a>{% endif %}
+        </div>
+      </div>
+      <div id="nav">
+        <!-- skiplink anchor: navigation -->
+        <a id="navigation" name="navigation"></a>
+        <div class="hlist">
+          <!-- main navigation: horizontal list -->
+          <ul>
+          	{% if request.user.is_authenticated %}
+	          	<li><a href="/">Index</a></li>
+	          	{% if request.user.is_superuser %}
+	            	<li><a href="/list_users">List users</a></li>
+	            {% else %}
+	            	<li><a href="/stats">Stats</a></li>
+	            	<li><a href="/feedback">Feedback</a></li>
+	            {% endif %}
+	            {% for question in questions %}
+	            	<li><a href="/q/{{ question.id }}">{{ question.title }}</a></li>
+	            {% endfor %}
+            {% else %}
+            	<li><a href="/login">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div id="main">
+      	{% if messages %}
+			{% for message in messages %}
+				{{ message.tags }} : {{ message }}<br />
+			{% endfor %}
+			<hr />
+		{% endif %}
+      	{% block body %}{% endblock %}
+      </div>
+      <!-- begin: #footer -->
+      </div>
+      <!-- begin: #footer -->
+    </div>
+    <div id="border-bottom">
+      <div id="edge-bl"></div>
+      <div id="edge-br"></div>
+    </div>
+  </div>
+</body>
+</html>

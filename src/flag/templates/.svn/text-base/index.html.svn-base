@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+{% load call_extras %}
+
+{% block title %}Capture The Flag{% endblock %}
+
+{% block body %}
+<br />
+Available flags:
+<br />
+{% for question in questions %}
+	<a href="/q/{{ question.id }}">{{ question.title }}</a> - 
+	{% if not request.user.is_superuser %}
+		{% if question|args:request.user|call:"has_answered" %}<b>Answered</b>{% else %}<b>Unanswered</b>{% endif %}
+	{% else %}
+		{{ question.answers.count }} answers ({{ question.get_correct_answers.count }} correct)
+	{% endif %}
+	<br />
+{% endfor %}
+
+{% endblock %}

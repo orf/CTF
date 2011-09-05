@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/ctf/!svn/ver/24/flag/templates
+END
+list_users.html
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/ctf/!svn/ver/14/flag/templates/list_users.html
+END
+user.html
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/ctf/!svn/ver/5/flag/templates/user.html
+END
+stats.html
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/ctf/!svn/ver/13/flag/templates/stats.html
+END
+register.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/ctf/!svn/ver/2/flag/templates/register.html
+END
+feedback.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/ctf/!svn/ver/23/flag/templates/feedback.html
+END
+500.html
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/ctf/!svn/ver/31/flag/templates/500.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/ctf/!svn/ver/2/flag/templates/index.html
+END
+question.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/ctf/!svn/ver/20/flag/templates/question.html
+END
+login.html
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/ctf/!svn/ver/2/flag/templates/login.html
+END
+template.html
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/ctf/!svn/ver/23/flag/templates/template.html
+END
+report.html
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/ctf/!svn/ver/28/flag/templates/report.html
+END

@@ -1,0 +1,55 @@
+{% extends "template.html" %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block body %}
+{% if failed %}
+You cannot view your statistics while there are active flags!
+{% else %}
+
+{% if ctf_settings.workshop_finished %}
+<a href="/generate_report">Generate a report card</a><br />
+{% endif %}
+You have <b>{{ points }}</b> points!<br />
+You answered {{ answers|length }} questions and got {{ correct|length }} correct answers!<br />
+You answered {{ first|length }} questions correctly before anyone else!<br /><br />
+Answers:
+<table border=1>
+	<tr>
+		<td>Question Title</td>
+		<td>Correct</td>
+		<td>First to answer</td>
+		<td>Points</td>
+	</tr>
+	{% for answer in answers %}
+	<tr>
+		<td>{{ answer.question.title }}</td>
+		<td>{% if answer.correct %}Yes{% else %}No{% endif %}</td>
+		<td>{% if answer.is_first %}Yes
+				{% else %}No
+				{% comment %}{% if answer.correct %}{% endcomment %}
+				
+				{% with since=answer.question.get_first_time|timesince:answer.submitted %}
+					 - The fastest answer was {{ since }} before you
+				{% endwith %}
+				
+				{% comment %}{% endif %}{% endcomment %}
+			{% endif %}</td>
+		<td>
+			{% if answer.correct %}
+			{{ answer.question.points }} {% if answer.is_first %}<font color="green">(+{{ ctf_settings.points_for_first_answer }})</font>{% endif %}
+			{% else %}0
+			{% endif %}
+		</td>
+	</tr>
+	{% endfor %}
+	<tr>
+		<td></td>
+		<td></td>
+		<td><p align="right">Total Points</p></td>
+		<td><b><p align="left">{{ points }}</p></b></td>
+	</tr>
+</table>
+
+{% endif %}
+{% endblock %}

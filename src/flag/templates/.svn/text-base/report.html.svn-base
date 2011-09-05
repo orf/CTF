@@ -1,0 +1,109 @@
+{% load humanize %}
+
+<html>
+	<head>
+		<style type="text/css">
+			body            { font-family: sans-serif; background: white; }
+			a, h1, h2       { color: #377BA8; }
+			h1, h2          { font-family: 'Georgia', serif; margin: 0; }
+			h1              { border-bottom: 2px solid #eee; }
+			h2              { font-size: 1.2em; }
+			
+			.page           { margin: 2em auto; width: 90%; border: 5px solid #ccc;
+			                  padding: 0.8em; background: white; }
+			.entries        { list-style: none; margin: 0; padding: 0; }
+			.entries li     { margin: 0.8em 1.2em; }
+			.entries li h2  { margin-left: -1em; }
+			.add-entry      { font-size: 0.9em; border-bottom: 1px solid #ccc; }
+			.add-entry dl   { font-weight: bold; }
+			.metanav        { text-align: left; font-size: 0.8em; padding: 0.3em;
+			                  margin-bottom: 1em; background: #fafafa; }
+			.flash          { background: #CEE5F5; padding: 0.5em;
+			                  border: 1px solid #AACBE2; }
+			.error          { background: #F0D6D6; padding: 0.5em; }
+			
+			
+			
+.cert_box_out { 
+			background-color: #648682;	
+			margin: 2em auto; 
+			width: 900px; 
+			border: 5px solid #999;
+			padding: 30px;}			
+.cert_box { 
+			background-color: #2b454d;	
+			width: 750px; 
+			padding: 73px;}
+	
+.cert_box table { width: 100%;
+			font-family: Tahoma, Verdana; 
+			font-size: 20px;
+			line-height: 40px; 
+			}
+			
+.cert_box table tr td { vertical-align: top;
+					}
+		
+.cert_box h1 {
+			font-family: Tahoma, Verdana; 
+			font-size: 52px;
+			color: #C7D4DB;
+			text-align: center;
+			padding: 100px 0 100px 0;}
+			
+.spc_data {
+			color: white;	
+			font-size: 26px;}
+			
+.main_info {
+			color: #d0d0d0;	
+			padding-bottom: 100px;
+		}
+			
+.trainers {
+			font-size: 18px;
+			color: white;				
+			padding: 0 0 50px 80px;
+		}
+		
+.date_now {
+			color: white;	
+			font-size: 18px;
+		}
+			
+		</style>
+	</head>
+	<body>
+		<div class="cert_box_out">
+		<div class="cert_box">
+		
+		<table>
+		<tr><td colspan="2"><img src="{{ STATIC_URL }}template_head.png">
+		</td></tr>
+		<tr><td class="main_info" colspan="2">
+		
+			<h1>CERTIFICATE</h1><br />
+			This is to certify that <b class="spc_data">{{ user.first_name|capfirst }} {% if user.last_name %}{{ user.last_name|capfirst }}{% endif %}</b><br /> 
+			attended the workshop titled: <br />
+			<b class="spc_data">"{{ ctf_settings.workshop_title }}"</b> <br />at {{ ctf_settings.event_title }}.<br /><br />
+
+			{% if not rank = -1 %}You were ranked <b class="spc_data">{{ rank|ordinal }}</b> out of <b class="spc_data">{{ total }}</b> scoring <b class="spc_data">{{ user.additional_info.points }} points</b>{% else %}Your rank could not be determined{% endif %}
+		</td></tr>
+		<tr><td class="date_now">
+			<i><b>Date:</b> {{ ctf_settings.workshop_date }}</i>
+			</td>
+			
+			<td class="trainers">
+			<b>Trainers:</b><br />
+						{{ ctf_settings.primary_trainer }}<br />
+						{{ ctf_settings.secondary_trainer}}
+			</td></tr>
+			<tr><td colspan="2"><hr></td></tr>
+		</table>
+			
+			
+			<br />
+		</div>
+		</div>
+	</body>
+</html>

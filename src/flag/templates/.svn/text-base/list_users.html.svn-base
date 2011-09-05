@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block title %}Listing {{ users|length }} users{% endblock %}
+
+{% block body %}
+<a href="/export_users">Export</a><br />
+<a href="/final_points">Finalize points and complete workshop</a><br />
+<table border=1 class="sortable">
+	<tr>
+		<td>Nickname</td>
+		<td>Questions answered</td>
+		<td>Questions correct</td>
+		<td>Company</td>
+		<td>Title</td>
+	</tr>
+	{% for user in users %}
+	<tr>
+		<td><a href="/u/{{ user.username }}">{{ user.username }}</a></td>
+		<td>{{ user.answers.count }}</td>
+		<td>{{ user.additional_info.get_right_answers.count }}</td>
+		<td>{{ user.additional_info.company }}</td>
+		<td>{{ user.additional_info.title }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% endblock %}

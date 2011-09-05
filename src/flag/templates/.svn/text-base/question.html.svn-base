@@ -1,0 +1,118 @@
+{% extends "template.html" %}
+{% load call_extras %}
+
+{% block head %}
+{% if request.user.is_superuser %}
+{% if question.is_active %}
+	<meta http-equiv="refresh" content="10">
+	{% endif %}
+{% endif %}
+
+<script type="text/javascript">
+  function display( notifier, str ) {
+    document.getElementById(notifier).innerHTML = str;
+  }
+        
+  function toMinuteAndSecond( x ) {
+    return Math.floor(x/60) + ":" + x%60;
+  }
+        
+  function setTimer( remain, actions ) {
+    (function countdown() {
+       display("countdown", toMinuteAndSecond(remain)+" minutes");         
+       actions[remain] && actions[remain]();
+       (remain -= 1) >= 0 && setTimeout(arguments.callee, 1000);
+               if(remain == -1){
+                        window.location.reload(true)
+}
+
+    })();
+  }
+
+</script>
+
+{% endblock %}
+
+
+{% block title %}{{ question.title }}{% endblock %}
+
+{% block body %}
+{% if question.is_active %}
+	Activated {{ question.started }}<br />
+	<b>Countdown: <div id="countdown"></div></b>
+	<script type="text/javascript">
+	setTimer({{ question.get_time_left }},0); 
+	$("#countdown").css('font-size',35.0)
+	</script>
+{% endif %}
+
+{% if not request.user.is_superuser %}
+	{% if answer %}
+		<b>You have answered this question</b><br />
+	{% else %}
+		<b>You have not answered this question yet!</b><br />
+	{% endif %}
+{% endif %}
+This question is worth <b>{{ question.points }}</b> points<br />
+<br />
+<h2>{{ question.question }}</h2>
+{% if not request.user.is_superuser %}
+	{% if question.is_active %}
+		{% if question.urls %}
+			<b>URLs associated with this question:</b><br />
+			{% for line in question.iter_urls %}
+				{{ line|urlize }}<br />
+			{% endfor %}
+		{% endif %}
+		<br />
+		<form action="/q/{{ question.id }}" method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit">
+		</form>
+	{% else %}
+		This question is not active!
+	{% endif %}
+{% else %}
+{% if question.is_active %}
+<table>
+	<tr>
+		<td><form action="/q/{{ question.id }}/extra_time" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="extra_time" value="1">
+		<input type="submit" value="Add 1 minute">
+	</form></td>
+	<td><form action="/q/{{ question.id }}/extra_time" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="extra_time" value="5">
+		<input type="submit" value="Add 5 minutes">
+	</form></td>
+	<td><form action="/q/{{ question.id }}/extra_time" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="extra_time" value="10">
+		<input type="submit" value="Add 10 minutes">
+	</form></td>
+	</tr>
+</table>
+{% endif %}
+	<br />
+	<form action="/active/{{ question.id }}" method="POST">
+		{% csrf_token %}
+		{% if not question.is_active %}{{ activate_form.as_p }}{% endif %}
+		<input type="submit" value="{% if question.is_active %}Deactivate{% else %}Activate{% endif %}">
+	</form>
+	<b>Latest answers</b>
+	<table border=1>
+		<tr>
+			<td>User</td>
+			<td>Submitted</td>
+		</tr>
+		{% for answer in question.enumerate_answers %}
+		<tr bgcolor="{% if answer.answer = question.answer %}lightgreen{% else %}red{% endif %}">
+			<td><a href="/u/{{ answer.user.username }}">{{ answer.user.username }}</a></td>
+			<td>{{ question.started|timesince:answer.submitted }} after activation ({{ answer.submitted|timesince }} ago)</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}
